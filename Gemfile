@@ -15,6 +15,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap'
 gem 'jquery-rails'
 gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
+gem 'bcrypt'
 
 
 group :development, :test do
