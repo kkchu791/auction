@@ -1,0 +1,12 @@
+<h1>Auction Items</h1>
+
+<div class="wrapper">
+  <% @auction_items.each do |item| %>
+
+    <div class="item">
+      <%= image_tag(item.image) %>
+      <%= item.name %>
+      <%= button_to "Bid" %>
+    </div>
+  <% end %>
+</div>

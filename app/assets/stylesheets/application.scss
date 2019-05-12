@@ -1,0 +1,17 @@
+@import "bootstrap";
+
+body {
+  padding-top: 70px;
+
+  .wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+
+
+    .item {
+      flex: 1;
+      margin: 10px 0px;
+    }
+  }
+}
