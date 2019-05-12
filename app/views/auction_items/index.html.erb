@@ -6,7 +6,7 @@
     <div class="item">
       <%= image_tag(item.image) %>
       <%= item.name %>
-      <%= button_to "Bid" %>
+      <%= link_to "Bid", "auction_items/#{item.id}", class: "btn-success btn" %>
     </div>
   <% end %>
 </div>

@@ -1,0 +1,23 @@
+<h1>
+  <%= @auction_item.name %>
+</h1>
+
+<div>
+    <%= image_tag(@auction_item.image) %>
+</div>
+
+
+<div>
+  <%= @auction_item.name %>
+  <%= @auction_item.highest_bid %>
+  <div> Highest Bidder </div>
+
+
+  <div> Input Field to bid </div>
+
+  <%= form_for(@auction_item) do |f| %>
+    <%= f.label :highest_bid %>
+    <%= f.text_field :highest_bid, class: 'form-control' %>
+    <%= f.submit "Bid", class: "btn btn-primary" %>
+  <% end %>
+</div>
