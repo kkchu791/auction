@@ -4,8 +4,10 @@
   <% @auction_items.each do |item| %>
 
     <div class="item">
-      <%= image_tag(item.image) %>
-      <%= item.name %>
+      <div><%= image_tag(item.image) %></div>
+      <div>item name: <%= item.name %></div>
+      <div>highest bidder: <%= item.highest_bid.user.email unless item.highest_bid.nil? %></div>
+      <div>current bid points: <%= item.highest_bid.points unless item.highest_bid.nil? %></div>
       <%= link_to "Bid", "auction_items/#{item.id}", class: "btn-success btn" %>
     </div>
   <% end %>

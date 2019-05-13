@@ -1,4 +1,13 @@
-<h1> You've successfully bid for this item </h1>
+<h1> You've successfully bid for <%= @auction_item.name %>. </h1>
+
+<div>
+    <%= image_tag(@auction_item.image) %>
+</div>
+
+
+<div>Item Name: <%= @auction_item.name %></div>
+<div>Current Bid: <%= @auction_item.highest_bid.points unless @auction_item.highest_bid.nil? %></div>
+<div>Highest Bidder: <%= @auction_item.highest_bid.user.email unless @auction_item.highest_bid.nil? %></div>
 
 <%= link_to "Increase your bid", "/auction_items/#{@auction_item.id}", class: "btn-success btn" %>
 <%= link_to "Back to Home Screen", "/auction_items", class: "btn-success btn" %>
