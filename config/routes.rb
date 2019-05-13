@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   # get '/auction_items/:id', to: 'auction_items#show'
   # get '/auction_items/:id', to: 'auction_items#update'
   resources :auction_items, only: [:index, :show, :edit, :update]
+  patch 'place_bid/:id', to: 'auction_items#place_bid', as: 'place_bid'
+  get 'place_bid/:id', to: 'auction_items#edit', as: 'place_bid_edit'
 
   # authentication routes
   get 'signup', to: 'users#new', as: 'signup'

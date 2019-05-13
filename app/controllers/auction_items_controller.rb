@@ -11,15 +11,17 @@ class AuctionItemsController < ApplicationController
     @auction_item = AuctionItem.find(params[:id])
   end
 
-  def update
+  def place_bid
     @auction_item = AuctionItem.find(params[:id])
-    if @auction_item.update_attributes(auction_item_params)
+    begin
+      @auction_item.place_bid!(current_user, auction_item_params[:highest_bid].to_i)
       render 'success'
-    else
+    rescue StandardError => e
+      @errors = @auction_item.errors.full_messages
+      @errors << e.to_s
       render 'edit'
     end
   end
-
 
   private
 
