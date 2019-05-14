@@ -1,39 +1,50 @@
 class AuctionItem < ApplicationRecord
   has_many :bids
-  has_one :highest_bid, class_name: 'Bid', dependent: :destroy
-  has_many :users, :through => :bids
+  has_many :users, through: :bids
 
   def place_bid!(user, points)
     validate_points(user, points)
 
     with_lock(true) do
-      return_user_points
+      return_highest_bidder_points
 
-      new_bid = bids.create!({
+      bids.create!({
         user: user,
-        auction_item: self,
         points: points
       })
-      update_attributes!(highest_bid: new_bid)
 
       user.subtract_points!(points)
     end
   end
 
-  def return_user_points
+  def highest_bid
+    bids.order(created_at: :desc).first
+  end
+
+  private
+
+  def return_highest_bidder_points
     if highest_bid
-      user = highest_bid.user
-      user.add_points!(highest_bid.points)
+      previous_highest_bidder = highest_bid.user
+      p highest_bid.points.to_s + "highest" + previous_highest_bidder.email.to_s
+      previous_highest_bidder.add_points!(highest_bid.points)
     end
   end
 
   def validate_points(user, points)
-    if user.points < points
-      raise StandardError, "You don't have enough points to make that bid. Your current points is: #{user.points}"
-    end
+    validates_user_has_enough_points(user, points)
+    validates_users_bid_high_enough(user, points)
+  end
 
-    if highest_bid.present? && (highest_bid.points >= points)
-      raise StandardError, "#{points} is not greater than #{highest_bid.points}. You have to bid higher than the current bid points"
+  def validates_user_has_enough_points(user, points)
+    if user.points < points
+      raise "You don't have enough points to make that bid. Your current points is: #{user.points}"
+    end
+  end
+
+  def validates_users_bid_high_enough(user, points)
+    if highest_bid && highest_bid.points >= points
+      raise "#{points} is not greater than #{highest_bid.points}. You have to bid higher than the current bid points."
     end
   end
 end
