@@ -11,18 +11,8 @@
 </div>
 
 
+<%= render partial: "shared/body", locals: {auction_item: @auction_item} %>
 
 <div>
-    <%= image_tag(@auction_item.image) %>
-</div>
-
-
-<div>Item Name: <%= @auction_item.name %></div>
-<div>Current Bid: <%= @auction_item.highest_bid.points unless @auction_item.highest_bid.nil? %></div>
-<div>Highest Bidder: <%= @auction_item.highest_bid.user.email unless @auction_item.highest_bid.nil? %></div>
-<div>
-  <%= form_for(@auction_item, :url => place_bid_path(@auction_item)) do |f| %>
-    <%= f.number_field :highest_bid, class: 'form-control' %>
-    <%= f.submit "Bid", class: "btn btn-primary" %>
-  <% end %>
+  <%= render partial: "shared/bid_form", locals: {auction_item: @auction_item} %>
 </div>
