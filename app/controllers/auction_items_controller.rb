@@ -1,4 +1,6 @@
 class AuctionItemsController < ApplicationController
+  before_action :authorize, except: [:index]
+
   def index
     @auction_items = AuctionItem.all
   end
@@ -14,18 +16,30 @@ class AuctionItemsController < ApplicationController
   def place_bid
     @auction_item = AuctionItem.find(params[:id])
     begin
-      @auction_item.place_bid!(current_user, auction_item_params[:highest_bid].to_i)
+      points =  item_params[:points].to_i
+      @auction_item.place_bid!(current_user, points)
       render 'success'
-    rescue StandardError => e
-      @errors = @auction_item.errors.full_messages
-      @errors << e.to_s
+    rescue => e
+      @errors = [e.to_s]
       render 'edit'
     end
   end
 
   private
 
-  def auction_item_params
-    params.require(:auction_item).permit(:highest_bid)
+  def item_params
+    params.permit(:points)
   end
 end
+
+
+# if place bid doesn't raises an errors i get  200 message
+# if place bid  raises and error
+
+  # hitting the place bid action,  expect(auction_item)to recieve(place_bid).with(current_user, highest_bid params)
+
+  # place in controller specs
+
+  #before do
+    #login current_user
+  #end
