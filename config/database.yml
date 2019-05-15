@@ -12,3 +12,7 @@ test:
   encoding: unicode
   database: test
   pool: 5
+
+production:
+  <<: *default
+  database: <%= ENV['AUCTION_DATABASE'] %>

@@ -7,10 +7,4 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-2.times do
-   AuctionItem.create(
-     name: Faker::Appliance.equipment,
-     image: Faker::Avatar.image,
-     end_time: DateTime.now + 5.hours,
-   )
-end
+9.times { AuctionItem.create(name: Faker::Appliance.equipment, image: Faker::Avatar.image) }

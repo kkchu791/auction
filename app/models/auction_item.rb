@@ -26,7 +26,6 @@ class AuctionItem < ApplicationRecord
   def return_highest_bidder_points
     if highest_bid
       previous_highest_bidder = highest_bid.user
-      p highest_bid.points.to_s + "highest" + previous_highest_bidder.email.to_s
       previous_highest_bidder.add_points!(highest_bid.points)
     end
   end
