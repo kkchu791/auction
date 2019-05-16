@@ -3,9 +3,8 @@ class AuctionItem < ApplicationRecord
   has_many :users, through: :bids
 
   def place_bid!(user, points)
-    validate_points(user, points)
-
     with_lock(true) do
+      validate_points(user, points)
       return_highest_bidder_points
 
       bids.create!({
